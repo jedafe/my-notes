@@ -219,6 +219,83 @@ var import_language = require("@codemirror/language");
 var import_state = require("@codemirror/state");
 var import_view = require("@codemirror/view");
 var import_obsidian3 = require("obsidian");
+var WIKI_LINK_PATTERNS = [
+  // e.g., "[[w:New York City]]"
+  {
+    debugName: "plain_wikilink",
+    nodes: [
+      "formatting-link_formatting-link-start",
+      "hmd-internal-link",
+      "formatting-link_formatting-link-end"
+    ],
+    textIndex: null,
+    targetIndex: 1,
+    checkForEm: true,
+    isExternalLink: false
+  },
+  // e.g., "[[w:Los Angeles|L.A.]]"
+  {
+    debugName: "piped_wikilink",
+    nodes: [
+      "formatting-link_formatting-link-start",
+      "hmd-internal-link_link-has-alias",
+      "hmd-internal-link_link-alias-pipe",
+      "hmd-internal-link_link-alias",
+      "formatting-link_formatting-link-end"
+    ],
+    textIndex: 3,
+    targetIndex: 1,
+    checkForEm: true,
+    isExternalLink: false
+  }
+];
+var EXTERNAL_LINK_PATTERNS = [
+  // e.g., "[Buffalo](w:Buffalo, New York)"
+  {
+    debugName: "external_link",
+    nodes: [
+      "formatting_formatting-link_link",
+      "link",
+      "formatting_formatting-link_link",
+      "formatting_formatting-link-string_string_url",
+      "string_url",
+      "formatting_formatting-link-string_string_url"
+    ],
+    textIndex: 1,
+    targetIndex: 4,
+    checkForEm: false,
+    isExternalLink: true
+  },
+  // e.g., "[](w:Miami)"
+  {
+    debugName: "blank_external_link",
+    nodes: [
+      "formatting_formatting-link_hmd-barelink_link",
+      "formatting_formatting-link-string_string_url",
+      "string_url",
+      "formatting_formatting-link-string_string_url"
+    ],
+    textIndex: null,
+    targetIndex: 2,
+    checkForEm: false,
+    isExternalLink: true
+  },
+  {
+    debugName: "external_link2",
+    nodes: [
+      "formatting_formatting-link_link_list-2",
+      "link_list-2",
+      "formatting_formatting-link_link_list-2",
+      "formatting_formatting-link-string_list-2_string_url",
+      "list-2_string_url",
+      "formatting_formatting-link-string_list-2_string_url"
+    ],
+    textIndex: 1,
+    targetIndex: 4,
+    checkForEm: false,
+    isExternalLink: true
+  }
+];
 var LivePreviewQuickLinksPluginValue = class {
   constructor(view) {
     this.slices = [];
@@ -252,98 +329,33 @@ var LivePreviewQuickLinksPluginValue = class {
         to,
         enter: (node) => {
           if (false) {
+            console.group();
             console.debug("Found node:", node.node.type.name);
+            console.debug("Markdown source:", view.state.sliceDoc(node.from, node.to));
+            console.groupEnd();
           }
           nodes.push(node.node);
         }
       });
     }
-    if (settings.useWikiLinkSyntax) {
-      const plainInternalLinkPattern = [
-        "formatting-link_formatting-link-start",
-        "hmd-internal-link",
-        "formatting-link_formatting-link-end"
-      ];
+    const patterns = settings.useWikiLinkSyntax ? WIKI_LINK_PATTERNS.concat(EXTERNAL_LINK_PATTERNS) : EXTERNAL_LINK_PATTERNS;
+    for (const pattern of patterns) {
       if (false) {
-        console.debug("Searching for plain internal links");
+        console.debug(`Searching for ${pattern.debugName}`);
       }
-      for (const chunk of findChunks(nodes, plainInternalLinkPattern)) {
-        console.assert(chunk.length === 3);
+      for (const chunk of findChunks(nodes, pattern.nodes)) {
+        console.assert(chunk.length === pattern.nodes.length);
         const from = chunk[0].from;
         const to = chunk[chunk.length - 1].to;
-        const target = view.state.sliceDoc(chunk[1].from, chunk[1].to);
-        const link = { text: "", target, em: chunk[0].name.startsWith("em") };
+        const target = view.state.sliceDoc(chunk[pattern.targetIndex].from, chunk[pattern.targetIndex].to);
+        const text = pattern.textIndex === null ? "" : view.state.sliceDoc(chunk[pattern.textIndex].from, chunk[pattern.textIndex].to);
+        const em = pattern.checkForEm ? chunk[0].name.startsWith("em") : false;
+        const link = { text, target, em };
         if (false) {
-          console.debug("Found link (plain internal)", link);
+          console.debug(`Found link (${pattern.debugName})`, link);
         }
-        this.handleLink(link, false, { from, to }, slices, quickLinksMap);
+        this.handleLink(link, pattern.isExternalLink, { from, to }, slices, quickLinksMap);
       }
-      const pipedInternalLinkPattern = [
-        "formatting-link_formatting-link-start",
-        "hmd-internal-link_link-has-alias",
-        "hmd-internal-link_link-alias-pipe",
-        "hmd-internal-link_link-alias",
-        "formatting-link_formatting-link-end"
-      ];
-      if (false) {
-        console.debug("Searching for piped internal links");
-      }
-      for (const chunk of findChunks(nodes, pipedInternalLinkPattern)) {
-        console.assert(chunk.length === 5);
-        const from = chunk[0].from;
-        const to = chunk[chunk.length - 1].to;
-        const target = view.state.sliceDoc(chunk[1].from, chunk[1].to);
-        const text = view.state.sliceDoc(chunk[3].from, chunk[3].to);
-        const link = { text, target, em: chunk[0].name.startsWith("em") };
-        if (false) {
-          console.debug("Found link (piped internal)", link);
-        }
-        this.handleLink(link, false, { from, to }, slices, quickLinksMap);
-      }
-    }
-    const externalLinkPattern1 = [
-      "formatting_formatting-link_link",
-      "link",
-      "formatting_formatting-link_link",
-      "formatting_formatting-link-string_string_url",
-      "string_url",
-      "formatting_formatting-link-string_string_url"
-    ];
-    if (false) {
-      console.debug("Searching for external links");
-    }
-    for (const chunk of findChunks(nodes, externalLinkPattern1)) {
-      console.assert(chunk.length === 6);
-      const from = chunk[0].from;
-      const to = chunk[chunk.length - 1].to;
-      const target = view.state.sliceDoc(chunk[4].from, chunk[4].to);
-      const text = view.state.sliceDoc(chunk[1].from, chunk[1].to);
-      const link = { text, target, em: false };
-      if (false) {
-        console.debug("Found link (external)", link);
-      }
-      this.handleLink(link, true, { from, to }, slices, quickLinksMap);
-    }
-    const externalLinkPattern2 = [
-      "formatting_formatting-link_hmd-barelink_link",
-      "formatting_formatting-link-string_string_url",
-      "string_url",
-      "formatting_formatting-link-string_string_url"
-    ];
-    if (false) {
-      console.debug("Searching for external links (pattern2)");
-    }
-    for (const chunk of findChunks(nodes, externalLinkPattern2)) {
-      console.assert(chunk.length === 4);
-      const from = chunk[0].from;
-      const to = chunk[chunk.length - 1].to;
-      const target = view.state.sliceDoc(chunk[2].from, chunk[2].to);
-      const text = "";
-      const link = { text, target, em: false };
-      if (false) {
-        console.debug("Found link (external)", link);
-      }
-      this.handleLink(link, true, { from, to }, slices, quickLinksMap);
     }
   }
   handleLink(link, externalLink, { from, to }, slices, quickLinksMap) {
