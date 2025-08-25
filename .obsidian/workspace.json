@@ -11,12 +11,13 @@
             "id": "06049772afc4a58f",
             "type": "leaf",
             "state": {
-              "type": "release-notes",
+              "type": "bases",
               "state": {
-                "currentVersion": "1.9.10"
+                "file": "Tutorials/tutorial.base",
+                "viewName": "Table"
               },
-              "icon": "lucide-book-up",
-              "title": "Release Notes 1.9.10"
+              "icon": "lucide-table",
+              "title": "tutorial"
             }
           }
         ]
@@ -181,8 +182,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 370.5,
-    "collapsed": true
+    "width": 370.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -200,6 +200,7 @@
   },
   "active": "06049772afc4a58f",
   "lastOpenFiles": [
+    "Tutorials/tutorial.base",
     "Tutorials/Lopret Uhin.md",
     "Tutorials/Programming/New Programming.md",
     "Dictionary/My New Dictionary.md",
