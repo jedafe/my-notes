@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "README.md",
+                "file": "Tutorials/New Note.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "README"
+              "title": "New Note"
             }
           }
         ]
@@ -212,10 +212,11 @@
   "active": "06049772afc4a58f",
   "lastOpenFiles": [
     "Tutorials/tutorial.base",
+    "Tutorials/New Note.md",
+    "README.md",
     "Tutorials/Lopret Uhin.md",
     "Tutorials/Programming/New Programming.md",
     "Dictionary/My New Dictionary.md",
-    "README.md",
     "Dictionary",
     "Tutorials/Nice Note.md",
     "Maybe Tool.md",
