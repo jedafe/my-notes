@@ -1,7 +1,7 @@
 {
   "resultsCount": 9,
   "khojUrl": "https://app.khoj.dev",
-  "khojApiKey": "kk-F0PdXM3iuXKTCrXnd4px36985wd9pPV2e2SvjCp-MZ4",
+  "khojApiKey": "kk-u32qI-9bXck3XrIHTtnH2vZaBKOgD_qc-zdfdXtBU9A",
   "connectedToBackend": true,
   "autoConfigure": true,
   "lastSync": {},
@@ -11,13 +11,114 @@
     "pdf": true
   },
   "userInfo": {
-    "email": "jephthahedafe@gmail.com",
-    "username": "jephthahedafe@gmail.com",
-    "photo": "https://lh3.googleusercontent.com/a/ACg8ocISWc_52DQi1dCkxWULynELUWpF4MoaMywkmC1i6r-8OZFR5A=s96-c",
+    "email": "jedafeglobal@gmail.com",
+    "username": "jedafeglobal@gmail.com",
+    "photo": "https://lh3.googleusercontent.com/a/ACg8ocI-sLYShK3jfz5gI0xvKE_AZ-gNzvNkic2RYXJWOL7tfhVgRg=s96-c",
     "is_active": false,
     "has_documents": false,
-    "khoj_version": "1.40.0"
+    "khoj_version": "2.0.0b14"
   },
   "syncFolders": [],
-  "syncInterval": 60
+  "syncInterval": 60,
+  "autoVoiceResponse": true,
+  "fileAccessMode": "read",
+  "selectedChatModelId": "30",
+  "availableChatModels": [
+    {
+      "id": "16",
+      "name": "O3 Mini"
+    },
+    {
+      "id": "17",
+      "name": "Llama 3.1 405B"
+    },
+    {
+      "id": "22",
+      "name": "Qwen 3 32B"
+    },
+    {
+      "id": "19",
+      "name": "Claude Haiku 3.5"
+    },
+    {
+      "id": "27",
+      "name": "Gemini Flash 2.5"
+    },
+    {
+      "id": "26",
+      "name": "Gemini Pro 2.5"
+    },
+    {
+      "id": "39",
+      "name": "GPT OSS 120B"
+    },
+    {
+      "id": "7",
+      "name": "GPT 4o"
+    },
+    {
+      "id": "35",
+      "name": "O3"
+    },
+    {
+      "id": "38",
+      "name": "Kimi K2"
+    },
+    {
+      "id": "24",
+      "name": "Gemini 2.5 Flash Lite"
+    },
+    {
+      "id": "10",
+      "name": "Claude Sonnet 4"
+    },
+    {
+      "id": "29",
+      "name": "O4 Mini"
+    },
+    {
+      "id": "32",
+      "name": "Grok 4"
+    },
+    {
+      "id": "28",
+      "name": "GPT 5"
+    },
+    {
+      "id": "23",
+      "name": "Deepseek R1 (Official)"
+    },
+    {
+      "id": "20",
+      "name": "Llama 3.3 70B"
+    },
+    {
+      "id": "21",
+      "name": "Qwen 2.5 72B"
+    },
+    {
+      "id": "25",
+      "name": "Claude Sonnet 3.7"
+    },
+    {
+      "id": "31",
+      "name": "GPT 5 Nano"
+    },
+    {
+      "id": "12",
+      "name": "GPT 4o Mini"
+    },
+    {
+      "id": "30",
+      "name": "GPT 5 Mini"
+    },
+    {
+      "id": "15",
+      "name": "Gemini Flash Lite 2.0"
+    },
+    {
+      "id": "33",
+      "name": "Grok Mini 3"
+    }
+  ]
 }
