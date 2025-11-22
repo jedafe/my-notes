@@ -4,47 +4,20 @@
     "type": "split",
     "children": [
       {
-        "id": "9680e194bee823a7",
+        "id": "1fad383ac220e0bf",
         "type": "tabs",
         "children": [
           {
-            "id": "06049772afc4a58f",
+            "id": "3bc992c92247e10e",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Tutorials/New Note.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "New Note"
-            }
-          },
-          {
-            "id": "17fa65322a1cc0f5",
-            "type": "leaf",
-            "state": {
-              "type": "release-notes",
-              "state": {
-                "currentVersion": "1.9.12"
-              },
-              "icon": "lucide-book-up",
-              "title": "Release Notes 1.9.12"
+              "title": "New tab"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -224,10 +197,10 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "17fa65322a1cc0f5",
+  "active": "3bc992c92247e10e",
   "lastOpenFiles": [
-    "Tutorials/tutorial.base",
     "Tutorials/New Note.md",
+    "Tutorials/tutorial.base",
     "README.md",
     "Tutorials/Lopret Uhin.md",
     "Tutorials/Programming/New Programming.md",
